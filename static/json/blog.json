@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Recent Poetry",
+    "subheading": "I don't think anyone is going to read this but oh well",
+    "date": "8 August 2025",
+    "categories": [
+      "Poetry",
+      "Writing"
+    ]
+  },
+  {
+    "title": "Using a 2013 Netbook in 2025",
+    "subheading": "Let me guess, you *need* more",
+    "date": "25 January 2025",
+    "categories": [
+      "Technology",
+      "Hardware",
+      "NixOS",
+      "Linux",
+      "Gaming",
+      "Low-spec",
+      "Review"
+    ]
+  },
+  {
+    "title": "A Slightly Better Blog",
+    "subheading": "Another uninteresting post about how this thing works",
+    "date": "19 October 2024",
+    "categories": [
+      "Technology",
+      "PHP",
+      "JSON",
+      "HTML",
+      "Programming"
+    ]
+  },
+  {
+    "title": "Idiot Installs Etterna on NixOS",
+    "subheading": "If it works, it works",
+    "date": "25 September 2024",
+    "categories": [
+      "Technology",
+      "NixOS",
+      "Etterna",
+      "Gaming",
+      "Rhythm Games",
+      "Linux"
+    ]
+  },
+  {
+    "title": "Tunneling My Homelab",
+    "subheading": "Hosting public services without port forwarding",
+    "date": "23 September 2024",
+    "categories": [
+      "Technology",
+      "Self-hosting",
+      "Networking",
+      "NixOS",
+      "Linux"
+    ]
+  },
+  {
+    "title": "A Simple Blog",
+    "subheading": "An uninteresting post about how this thing works",
+    "date": "22 September 2024",
+    "categories": [
+      "Technology",
+      "PHP",
+      "Self-hosting",
+      "JSON",
+      "Programming"
+    ]
+  }
+]

@@ -1,0 +1,306 @@
+<p>Happy (late) new year!</p>
+<br />
+<p>
+  About a month ago I decided to refurbish an old netbook to use as a portable
+  laptop, since my ThinkPad T430 is very bulky and annoying to carry around.
+</p>
+<br />
+<p>
+  A while ago, I was given a couple of broken old Acer Travelmate B110-E
+  netbooks by a family member. They were originally used by a primary school, so
+  you know they&#39;re only the finest quality.
+</p>
+<br />
+<p>They were both broken in different ways:</p>
+<br />
+<h4 id="laptop-1">Laptop 1</h4>
+<br />
+<ul>
+  <li>Broken screen (lines all over)</li>
+  <li>Would not boot past BIOS splash screen or enter setup utility</li>
+</ul>
+<br />
+<h4 id="laptop-2">Laptop 2</h4>
+<br />
+<ul>
+  <li>Screen/bezel hinge completely snapped and detached</li>
+  <li>Fan so rattly you can hear it from two rooms away</li>
+  <li>Sunken in trackpad that would not come back out</li>
+</ul>
+<br />
+<p>
+  I was able to salvage a working laptop from the working parts (with a couple
+  of upgrades and a thermal paste change) fairly easily.
+</p>
+<br />
+<h3 id="the-hardware">The Hardware</h3>
+<br />
+<p>The specs are really nothing special...</p>
+<ul>
+  <li>
+    Intel Celeron 1007U processor (Ivybridge, 1.50 GHz, 2 cores/threads, 17W
+    TDP)
+  </li>
+  <li>
+    8 GB 1600 MT/s memory (upgraded from 3 GB of slower, mismatched memory)
+  </li>
+  <li>240 GB WD Green SATA SSD (upgraded from a 120 GB Crucial M500)</li>
+  <li>1366x768 @ 60Hz LCD display</li>
+</ul>
+<br />
+<p>
+  The only component I needed to purchase for this was a new battery which cost
+  a total of $38.46 AUD from Aliexpress (with shipping). It&#39;s a pretty
+  terrible battery (who would&#39;ve guessed) but it works well enough that
+  I&#39;m satisfied.
+</p>
+<br />
+<p>It also has respectable IO:</p>
+<ul>
+  <li>x1 Ethernet</li>
+  <li>x1 VGA</li>
+  <li>x1 HDMI</li>
+  <li>x1 headphone/microphone jack</li>
+  <li>x3 USB 2.0</li>
+  <li>DC charging port (big fan of this)</li>
+</ul>
+<br />
+<p>
+  As much as I wish it had USB 3.0 I would not expect a low-end machine from
+  2013 to have it, and it&#39;s not really a big deal. An SD card reader would
+  be good as well, but also not a dealbreaker.
+</p>
+<br />
+<p>
+  The form factor is very convenient, at 29.46 cm / 11.6&quot; and weighing in
+  at 1.276 kg / 2.8 lbs.
+</p>
+<br />
+<a href="blog/files/netbook.jpeg" target="_blank"
+  ><img src="blog/files/netbook.webp" class="blog-img"
+/></a>
+<br />
+<br />
+<h3 id="the-software">The Software</h3>
+<br />
+<p>
+  My OS of choice is NixOS, so that&#39;s what I installed on this thing. NixOS
+  certainly isn&#39;t the most optimized Linux distribution I&#39;ve tried (that
+  award would easily go to Void) but the convenience of having all of my shared
+  configurations in one nix flake is my primary reason for using it.
+</p>
+<br />
+<p>
+  The window manager I ended up going with is SwayFX. I would usually use
+  Hyprland but SwayFX uses marginally less resources (roughly 100 MB less RAM)
+  so I went with it in order to get as light of a desktop as I can (with it
+  still being adequately riceable and compatible with my workflow).
+</p>
+<br />
+<p>
+  The other software I&#39;m using is:<br /><br />
+  <b>Kernel:</b> Linux-zen <br />
+  <b>Web Browser:</b> Firefox with Betterfox user.js and a mininal
+  userChrome.css <br />
+  <b>Terminal:</b> Foot <br />
+  <b>Shell:</b> ZSH with Starship prompt <br />
+  <b>Status Bar:</b> Waybar <br />
+  <b>App Launcher:</b> Anyrun (considering switching if I can find another
+  launcher that supports shadows)<br />
+  <b>Notification Daemon:</b> SwayNC <br />
+  <b>Editor:</b> Neovim<br />
+  <b>File Manager (GUI):</b> Thunar <br />
+  <b>File Manager (TUI):</b> Yazi<br />
+  <b>Display Manager:</b> SDDM <br />
+  <b>Music Player:</b> MPD/ncmpcpp<br />
+</p>
+<br />
+<p>Here&#39;s my current rice (click for clearer view):</p>
+<br />
+<a href="blog/files/rice1.png" target="_blank"
+  ><img class="blog-img" src="blog/files/rice1.webp"
+/></a>
+<a href="blog/files/rice2.png" target="_blank"
+  ><img class="blog-img" src="blog/files/rice2.webp"
+/></a>
+<br />
+<br />
+<h3 id="performance">Performance</h3>
+<br />
+<h4 id="web-browsing">Web Browsing</h4>
+<br />
+<p>
+  I was honestly very surprised by how usable this machine is. Web browsing is
+  generally very smooth, and it can comfortably play Youtube videos at up to
+  1080p with the help of enhanced-h264ify/Invidious.
+</p>
+<br />
+<p>The extensions I have installed are:</p>
+<br />
+<ul>
+  <li>Ublock Origin</li>
+  <li>SponsorBlock</li>
+  <li>Stylus (rarely used on this machine)</li>
+  <li>ViolentMonkey (Also rarely used on this machine)</li>
+  <li>LocalCDN</li>
+  <li>LibRedirect</li>
+  <li>floccus bookmark sync</li>
+  <li>ClearURLs</li>
+  <li>Control Panel for Twitter</li>
+  <li>enhanced-h264ify</li>
+  <li>Pywalfox</li>
+</ul>
+<br />
+<p>
+  Websites are slightly slower than they are on my laptop or PC (as expected)
+  but it&#39;s not noticeable after a short adjustment period. I wouldn&#39;t
+  describe it as &quot;laggy&quot;, rather just &quot;less smooth&quot;.
+</p>
+<br />
+<h4 id="discord">Discord</h4>
+<br />
+<p>
+  Vesktop with custom CSS and numerous plugins can get noticeably laggy but not
+  to the point where it&#39;s unusable. The vanilla discord webapp runs fairly
+  effortlessly in Firefox. I usually close Vesktop if I&#39;m planning to do
+  something resource intensive as it does tend to eat the CPU.
+</p>
+<br />
+<h4 id="gaming">Gaming</h4>
+<br />
+<p>
+  I was not expecting much at all from this, but it definitely exceeded my
+  expectations!
+</p>
+<br />
+<p>
+  The first game I tried was Luanti/Minetest. It ranges from 20-60 FPS with the
+  VoxeLibre mod, making it playable (but only just).
+</p>
+<br />
+<p>
+  After that I installed Duke Nukem 3D with eDuke32 and it runs flawlessly. Same
+  goes for Doom with GZDoom.
+</p>
+<br />
+<p>
+  The next game I tried was Minecraft which definitely surprised me the most out
+  of everything I tried...
+</p>
+<br />
+<p>
+  On the latest version of Minecraft (1.21.4 currently) I was able to get it to
+  run at an average of up to 78 FPS at an 80 FPS cap in a singleplayer world
+  (with a few dips but still)!
+</p>
+<br />
+<p>I use Prismlauncher with the Fabric modloader with the following mods:</p>
+<br />
+<ul>
+  <li>Almanac</li>
+  <li>AppleSkin</li>
+  <li>BadOptimizations</li>
+  <li>Chunky</li>
+  <li>Clumps</li>
+  <li>Concurrent Chunk Management Engine</li>
+  <li>Debugify</li>
+  <li>Dynamic FPS</li>
+  <li>EntityCulling</li>
+  <li>FallingTree</li>
+  <li>FerriteCore</li>
+  <li>ImmediatelyFast</li>
+  <li>Jade</li>
+  <li>Krypton</li>
+  <li>Ksyxis</li>
+  <li>Let Me Despawn</li>
+  <li>Lithium</li>
+  <li>Mod Menu</li>
+  <li>ModernFix</li>
+  <li>More Culling</li>
+  <li>No Telemetry</li>
+  <li>Noisium</li>
+  <li>Reese&#39;s Sodium Options</li>
+  <li>Sodium</li>
+  <li>Sodium Extra</li>
+  <li>Xaero&#39;s Minimap</li>
+</ul>
+<br />
+<p>
+  The in-game settings are all pretty much set to the lowest they can go, and
+  the game was run with Gamemode.
+</p>
+<br />
+<p>
+  The only other games I tried, aside from solitaire, Space Cadet Pinball and
+  battleships (which all ran great) were Run and Run 3 in the broweser. Run
+  plays perfectly, but Run 3 lags (although it's still playable, overall).
+</p>
+<br />
+<h4 id="benchmarks">Benchmarks</h4>
+<br />
+<p>
+  These were ran on a non-fresh boot with Firefox and KeepassXC open so take
+  these with a grain of salt.
+</p>
+<br />
+<p>
+  Hardinfo: <br /><br />
+  <b>CPU Blowfish:</b> 11.82<br />
+  <b>CPU CryptoHash:</b> 149.05<br />
+  <b>CPU Fibonacci:</b> 3.76<br />
+  <b>CPU N-Queens:</b> 15.42<br />
+  <b>FPU FFT:</b> 3.78<br />
+  <b>FPU Raytracing:</b> 8.11<br />
+</p>
+<br />
+<p>Sysbench:</p>
+<br />
+<ul>
+  <li><a href="blog/files/cpu.txt" target="_blank">CPU</a></li>
+  <li><a href="blog/files/memory.txt" target="_blank">Memory</a></li>
+  <li><a href="blog/files/fileio.txt" target="_blank">File IO</a></li>
+</ul>
+<br />
+<h3 id="conclusion">Conclusion</h3>
+<br />
+<p>
+  TLDR; This 2013 netbook is usable in 2025, but only if you use a lightweight
+  Linux setup and know how to optimize the software you&#39;re using.
+</p>
+<br />
+<h4 id="pros">Pros</h4>
+<br />
+<ul>
+  <li>Small and lightweight, making it very portable</li>
+  <li>Very durable</li>
+  <li>Repairable/modular design</li>
+  <li>Ethernet port</li>
+  <li>Distraction-free, due to less support for games</li>
+  <li>Very comfy</li>
+  <li>Quiet, even under load</li>
+  <li>Conversation starter, I guess</li>
+</ul>
+<br />
+<h3 id="cons">Cons</h3>
+<br />
+<ul>
+  <li>Relatively slow</li>
+  <li>Can&#39;t run many games</li>
+  <li>Shitty screen and awful speakers</li>
+  <li>Very short battery life and limited options for replacement batteries</li>
+  <li>No USB 3.0 or SD card reader</li>
+  <li>Tiny annoying arrow keys / overall tacky keyboard</li>
+</ul>
+<br />
+<p>
+  So pretty much, I would not willingly use this as my main computer, but I
+  reckon I could, hypothetically. I&#39;m continuing to use this as a portable
+  laptop for situations where I don&#39;t need anything better.
+</p>
+<br />
+<p>
+  The moral of this story is that you don&#39;t need a new computer (unless you
+  do).
+</p>
+<br />
+<p>Bye :)</p>

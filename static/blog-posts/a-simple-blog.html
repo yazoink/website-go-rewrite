@@ -1,0 +1,46 @@
+<p>I gave up on trying to maintain a blog while still hosting this site on Neocities, since maintaining a blog in pure HTML/CSS is a massive pain in the ass. Now, since I'm hosting this on my personal server there are pretty much no limitations, so I've rewritten this site in PHP. My "blogging engine" solution is very rudimentary but it definitely gets the job done miles better than the old way.</p>
+<br />
+<p>I can't be fucked to set up a full content management system or a SQL database for this so I'm just putting all of my posts in a JSON file structured like this:</p>
+<pre><code>[
+  {
+    "title": "Example Blog Entry",
+    "entry": 1,
+    "subheading": "This is a blog post",
+    "date": "22 September 2024",
+    "categories": ["Personal", "Technology"],
+    "content": [
+    "&lt;p&gt;This is a paragraph.&lt;/p&gt;",
+    "&lt;p&gt; This is another paragraph.&lt;/p&gt;"
+    ]
+  }
+]
+</code></pre>
+<br />
+<p>It's obviously not an optimal solution since I have to SSH into my server and edit a JSON file to make a blog post but it's more than doable. Maybe in the future I'll consider making some kind of UI for it but I'm fairly content with it as-is.</p>
+<br />
+<p>I've also written an RSS feed generator that looks like this:</p>
+<pre><code>&lt;?php
+require 'dynamic/variables.php';
+
+$jsonStr = file_get_contents('json/blog.json');
+$json = json_decode($jsonStr, true);
+
+header("Content-Type: application/rss+xml; charset=UTF-8");
+echo "&lt;?xml version='1.0' encoding='UTF-8'?&gt;";
+echo "&lt;rss version='2.0'&gt;";
+echo "&lt;channel&gt;";
+echo "&lt;title&gt;yazoink&lt;/title&gt;";
+echo "&lt;link&gt;https://$domain&lt;/link&gt;";
+echo "&lt;description&gt;yazoink's blog&lt;/description&gt;";
+foreach ($json as $blogEntry) {
+  echo "&lt;item&gt;";
+  echo "&lt;title&gt;" . $blogEntry['title'] . "&lt;/title&gt;";
+  echo "&lt;link&gt;https://$domain/index.php?nav=Blog&amp;entry=" . $blogEntry['entry'] . "&lt;/link&gt;";
+  echo "&lt;description&gt;" . $blogEntry['subheading'] . "&lt;/description&gt;";
+  echo "&lt;pubDate&gt;" . date(DATE_RSS, strtotime($blogEntry['date'])) . "&lt;/pubDate&gt;";
+  echo "&lt;/item&gt;";
+}
+echo "&lt;/channel&gt;";
+echo "&lt;/rss&gt;";
+?&gt;
+</code></pre>

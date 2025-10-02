@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="yazoink" />
+    <meta
+      name="keywords"
+      content="blog, art, technology, linux, programming, hobbies, personal"
+    />
+    <title>yazoink</title>
+    <link rel="preload" href="{{.CssFile}}" as="style" />
+    <link rel="stylesheet" href="{{.CssFile}}" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="title">
+        <a href="/"><img src="{{.HeaderImage}}" /></a>
+      </header>
+      <main class="content">
+        <div class="content-inside">
+          {{if .PageTitle}}
+          <h1 class="page-title">{{.PageTitle}}</h1>
+          {{end}}
+          <div class="main-content">
+            {{block "content" .}}
+            <p>Something went wrong :(</p>
+            {{end}}
+            <br />
+          </div>
+        </div>
+      </main>
+      <nav class="sidebar-left">
+        <img class="sidebar-img" src="{{.NavImage}}" />
+        <h2>Navigation</h2>
+        <ul>
+          {{range .NavLinks.Nav}}
+          <li><a href="{{.Url}}">{{.Name}}</a></li>
+          {{end}}
+        </ul>
+        <br />
+        <h2>Find Me</h2>
+        <ul>
+          {{range .NavLinks.Socials}}
+          <li><a href="{{.Url}}" target="_blank">{{.Name}}</a></li>
+          {{end}}
+        </ul>
+      </nav>
+      <aside class="sidebar-right">
+        <img class="sidebar-img" src="{{.AsideImage}}" />
+      </aside>
+      <footer class="footer">
+        <p>
+          yazoink 2022-2025 |
+          <a href="mailto:yazoink@firemail.cc">yazoink@firemail.cc</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

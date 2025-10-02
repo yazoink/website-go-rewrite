@@ -1,0 +1,50 @@
+{
+  "nav": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "About Me",
+      "url": "/about"
+    },
+    {
+      "name": "Bookmarks",
+      "url": "/bookmarks"
+    },
+    {
+      "name": "Technology",
+      "url": "/technology"
+    },
+    {
+      "name": "Services",
+      "url": "/services"
+    },
+    {
+      "name": "Blog",
+      "url": "/blog"
+    },
+    {
+      "name": "Art Gallery",
+      "url": "/gallery"
+    }
+  ],
+  "socials": [
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com/yazoink"
+    },
+    {
+      "name": "Github",
+      "url": "https://github.com/yazoink"
+    },
+    {
+      "name": "Scratch",
+      "url": "https://scratch.mit.edu/users/yazoink"
+    },
+    {
+      "name": "Odysee",
+      "url": "https://odysee.com/@yazoink:c"
+    }
+  ]
+}

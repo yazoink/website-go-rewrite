@@ -1,0 +1,53 @@
+<p>The <a href='?nav=Blog&entry=a-simple-blog' target='_blank'>first entry</a> in this blog was about my moderately scuffed content management setup. You can read the full post if you want all the context but tldr; I made it so all of the posts (including their contents) are read directly from a JSON file.</p>
+<p>This system works fine in theory, but in practice it's extremely annoying to write HTML inside a JSON file.</p>
+<br />
+<p>My solution to this problem was actually very simple and I don't know why I didn't think of this initially. I also simplified a few other things, as you'll see.</p>
+<br />
+<p>The original JSON was formatted like this:</p>
+<pre><code>[
+ {
+  "title": "Example Blog Entry",
+  "entry": 1,
+  "subheading": "This is a blog post",
+  "date": "22 September 2024",
+  "categories": ["Personal", "Technology"],
+  "content": [
+   "&lt;p&gt;This is a paragraph.&lt;/p&gt;",
+   "&lt;p&gt;This is another paragraph.&lt;/p&gt;"
+  ]
+ }
+]
+</code></pre>
+<br />
+<p>And the new file is formatted like this:</p>
+<pre><code>[
+  {
+    "title": "Example Blog Entry",
+    "subheading": "This is a blog post",
+    "date": "22 September 2024",
+    "categories": ["Personal" "Technology"]
+  }
+]
+</code></pre>
+<br />
+<p>Obviously a lot simpler!</p>
+<p>I moved the blog posts to individual HTML files in their own directory and made the code for the blog generate a post ID of sorts (instead of specifying one). It does this by taking the <code>title</code> variable and replacing all the spaces with hyphens and converting all the capital letters to lower case.</p>
+<p>All of the files in the <code>blog/entries</code> directory are named as <code>&lt;ID&gt;.html</code> and that's how the script searches for them.</p>
+<br />
+The new directory structure looks like this:
+<pre><code>blog/
+|
+|_ entries/
+|  |_ example-blog-post.html
+|  |_ another-blog-post.html
+|
+|_ images/
+|  |_ image_from_a_blog_post.jpg
+|  |_ another_image_from_a_blog_post.jpg
+|
+|_ blog.json
+</code></pre>
+<br />
+<p>The IDs are also used in the page URLs, making the old <code>entry</code> variable unnecessary.</p>
+<br />
+<p>This has made the process of making posts substantially easier, so hopefully I'll use this thing more now.</p>

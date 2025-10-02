@@ -1,0 +1,28 @@
+{{define "content"}}
+<p>
+  <b>Categories</b>:
+  <a href="/blog">All Posts</a>
+  {{range .BlogCategories}}
+  <a href="/blog/category/{{.}}">{{.}}</a>
+  {{end}}
+</p>
+<br />
+{{if .SelectedBlogCategory}}
+<h2>{{.SelectedBlogCategory}}</h2>
+<ul>
+  {{range .BlogPostsInSelectedCategory}}
+  <li>
+    <a href="/blog/post/{{.Title}}"><b>{{.Title}}</b> - {{.Date}}</a>
+  </li>
+  {{end}}
+</ul>
+{{else}}
+<h2>All Posts</h2>
+<ul>
+  {{range .BlogPosts}}
+  <li>
+    <a href="/blog/post/{{.Title}}"><b>{{.Title}}</b> - {{.Date}}</a>
+  </li>
+  {{end}}
+</ul>
+{{end}} {{end}}

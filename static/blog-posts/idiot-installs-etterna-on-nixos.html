@@ -1,0 +1,136 @@
+<p>I'm going to preface this by saying that I've only been using NixOS for about a month so I don't know what I'm doing and there's probably a much better way to do this.</p>
+<br />
+<p>I was really surprised to find that Etterna isn't in nixpkgs, despite it being the largest linux software repository. Before switching to Nix I was using Arch, and Etterna is in the AUR so it was as easy as one command to install it.</p>
+<br />
+<p>It seems that not many people have attempted to install Etterna on NixOS, probably for a good reason. This process was very long and annoying and I'm mainly writing this to save anyone else who might try this a few hours and a headache.</p>
+<br />
+<p>This is the module I'm using to compile and install Etterna to the nix store (<code>etterna.nix</code>):</p>
+<pre><code>{ stdenv, lib, fetchFromGitHub, cmake, nasm
+, gtk2, glib, ffmpeg_4, alsa-lib, libmad, libogg, libvorbis
+, glew, libpulseaudio, udev, openssl, doxygen, pkg-config
+, libX11, libGLU, libGL, libXpm, libXext, libXxf86vm
+}:
+
+stdenv.mkDerivation {
+  pname = "etterna";
+  version = "0.73-dev";
+
+  src = fetchFromGitHub {
+    owner = "etternagame";
+    repo  = "etterna";
+    rev   = "develop";
+    sha256 = "sha256-LdJDTO8c7kS8G52b0MRO4oFhZZlcsexwJl1deVz9vf0=";
+  };
+
+    nativeBuildInputs = [ cmake nasm pkg-config ];
+
+  buildInputs = [
+    gtk2 glib ffmpeg_4 alsa-lib libmad libogg libvorbis
+    glew libpulseaudio udev openssl doxygen
+     libX11 libGLU libGL libXpm libXext libXxf86vm
+  ];
+
+  cmakeFlags = [
+    "-DCMAKE_BUILD_TYPE=Release"
+    "-DWITH_SYSTEM_FFMPEG=1"
+    "-DGTK2_GDKCONFIG_INCLUDE_DIR=${gtk2.out}/lib/gtk-2.0/include"
+    "-DGTK2_GLIBCONFIG_INCLUDE_DIR=${glib.out}/lib/glib-2.0/include"
+    "-DWITH_CRASHPAD=OFF"
+  ];
+
+  meta = with lib; {
+    homepage = "https://www.etterna.com/";
+    description = "Free dance and rhythm game for Windows, Mac, and Linux";
+    platforms = platforms.linux;
+    license = licenses.mit; # expat version
+    maintainers = [ ];
+    broken = stdenv.isLinux &amp;&amp; stdenv.isAarch64;
+  };
+}</code></pre>
+<br />
+<p>Most of this was copied from <a href='https://github.com/not-leader/etterna-flake' target='_blank'>here</a> because everything I tried would fail to compile for one reason or another. I had to make a few modifications because after installing it as-is, I ran into an issue.</p>
+<br />
+<p>To my knowledge, all of Etterna's data directories are hard-coded to be in the same directory as the executable binary. On other distros this wouldn't be as much of a problem, put it wherever you want and symlink the executable to <code>/usr/bin</code>.</p>
+<br />
+<p>On NixOS, since directories in <code>/nix/store</code> are immutable and read-only, you can't have the data directories in there because they need to be written to, post-installation. This is a problem because if the Etterna binary isn't in the same directory as the data directories, it doesn't work.</p>
+<br />
+<p>My solution to this was to create a systemd service that will run a script every rebuild. This script will copy all of Etterna's files in the nix store to <code>~/.local/share</code>, symlink all of the directories that need to be persistent to <code>~/.etterna</code> and create a <code>.desktop</code> file in <code>~/.local/share/applications</code>.</p>
+<br />
+<p>I have all of these files in an etterna directory in my modules. This is what the <code>default.nix</code> file looks like this:</p>
+<pre><code>{pkgs, ...}:
+let
+  username = "gene";
+  etterna = pkgs.callPackage ./etterna.nix {};
+  script = ./local-install.sh;
+  desktopFile = ./etterna.desktop;
+in
+{
+  environment.systemPackages = [
+    etterna
+  ];
+
+  systemd.services.etterna-local-install = {
+    description = "Install Etterna locally";
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash ${script} ${etterna} ${desktopFile} ${username}";
+    };
+  };
+}
+</code></pre>
+<br />
+<p>this is <code>local-install.sh</code>:</p>
+<pre><code>homeDir="/home/$3"
+installDir="$homeDir/.local/share/Etterna"
+applicationsDir="$homeDir/.local/share/applications"
+
+if [[ ! -f "$installDir/Etterna" ]]; then
+  cp -r "$1/Etterna" "$installDir"
+  mkdir "$homeDir/.etterna"
+  mkdir "$homeDir/.etterna/Save"
+  mv "$installDir/Announcers" "$homeDir/.etterna"
+  mv "$installDir/Assets" "$homeDir/.etterna"
+  mv "$installDir/NoteSkins" "$homeDir/.etterna"
+  mv "$installDir/Songs" "$homeDir/.etterna"
+  mv "$installDir/Themes" "$homeDir/.etterna"
+else
+  rm -rf "$installDir"
+  cp -r "$1/Etterna" "$installDir"
+  rm -rf "$installDir/Announcers"
+  rm -rf "$installDir/Assets"
+  rm -rf "$installDir/NoteSkins"
+  rm -rf "$installDir/Songs"
+  rm -rf "$installDir/Themes"
+fi
+
+ln -s "$homeDir/.etterna/Announcers" "$installDir"
+ln -s "$homeDir/.etterna/Assets" "$installDir"
+ln -s "$homeDir/.etterna/NoteSkins" "$installDir"
+ln -s "$homeDir/.etterna/Save" "$installDir"
+ln -s "$homeDir/.etterna/Songs" "$installDir"
+ln -s "$homeDir/.etterna/Themes" "$installDir"
+
+if [[ -f "$applicationsDir/etterna.desktop" ]]; then
+  rm "$applicationsDir/etterna.desktop"
+fi
+
+cp "$2" "$applicationsDir/etterna.desktop"
+echo "Exec=$installDir/Etterna" | tee -a "$applicationsDir/etterna.desktop"
+
+chown -R "$3":users "$homeDir/.etterna"
+chmod -R 755 "$homeDir/.etterna"
+
+mkdir "$installDir/Cache"
+chown -R "$3":users "$installDir/Cache"
+chmod -R 755 "$installDir/Cache"
+</code></pre>
+<br />
+<p>and this is <code>etterna.desktop</code>:</p>
+<pre><code>[Desktop Entry]
+Name=Etterna
+Comment=The Next Step in Dance Simulation
+Type=Application
+Categories=Game
+</code></pre>
+<p>This configuration is working as of when I'm writing this. If anyone has a better solution to this, feel free to <a href="mailto:yazoink@firemail.cc">email</a> me about it.</p>

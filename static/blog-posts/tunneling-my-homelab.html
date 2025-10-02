@@ -1,0 +1,44 @@
+<p>Tunneling my homelab to a VPS was really a lot easier than I expected. For a good while I was reluctant to buy a VPS since I didn't know if I was actually going to get it to work, but after seeing <a href='https://blog.ahwx.org/frp' target='_blank'>this</a> article about frp I decided to give it a go.</p>
+<br />
+<p>The VPS I've gone with is a 2 GB Linode running Alpine Linux and my home servers are running NixOS.</p>
+<p>To enable frp on my home server, I've added a module like this:</p>
+<pre><code>{
+  services.frp = {
+    enable = true;
+    role = "client";
+    settings = {
+      serverAddr = "&lt;remote server public IP&gt;";
+      serverPort = &lt;server port&gt;;
+      auth.method = "token";
+      auth.token = "&lt;auth token&gt;";
+      transport.protocol = "tcp";
+      proxies = [
+        {
+          name = "&lt;service name&gt;";
+          type = "tcp";
+          localIP = "&lt;local IP of service&gt;";
+          localPort = &lt;local port of service&gt;;
+          remotePort = &lt;target port on remote server&gt;;
+        }
+      ];
+    };
+  };
+}
+</code></pre>
+<br />
+<p>To enable it on the VPS I installed frp with <code>sudo apk add frp</code> and wrote the following to <code>/etc/frp/frps.toml</code>:</p>
+<pre><code>bindPort = &lt;server port&gt;
+auth.method = "token"
+auth.token = "&lt;auth token&gt;"
+</code></pre>
+<br />
+<p>After that, I enabled the service with <code>sudo rc-update add frps default</code>, And that's all there is to it! You can now access all the forwarded services from the address of your VPS.</p>
+<br />
+<p>I also use Caddy as a reverse proxy to enable HTTPS and map the all of the services to subdomains. To do this all you need is to install Caddy and create a file under <code>/etc/caddy/Caddyfile</code> that looks something like this:</p>
+<pre><code>"myservice.domain.tld" {
+  reverse_proxy localhost:&lt;port&gt;
+}
+</code></pre>
+<p>and run <code>sudo rc-update add caddy default</code>.</p>
+<br />
+<p>So far it's been very fast and stable, I definitely recommend trying this if you're looking for a way to host your homelab publically without port forwarding or revealing your IP.</p>

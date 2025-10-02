@@ -1,0 +1,30 @@
+:root {
+  --sidebar-left-width: 140px;
+  --sidebar-right-width: 240px;
+  --content-width: 560px;
+  --sidebar-padding: 5px;
+  --site-width: calc(
+    var(--sidebar-left-width) + var(--sidebar-right-width) +
+      var(--content-width) + calc(var(--column-gap) * 2)
+  );
+
+  --title-height: 90px;
+  --content-height: 460px;
+  --footer-height: 50px;
+  --column-gap: 10px;
+  --site-height: calc(
+    var(--title-height) + var(--content-height) + var(--footer-height)
+  );
+
+  --square-img-height: 155px;
+  --square-img-width: var(--square-img-height);
+
+  --portrait-img-height: 230px;
+
+  --padding-top: 10px;
+  --padding-side: 20px;
+  --padding-pre: 15px;
+  --padding-ul: 30px;
+  --button-padding-top: 3px;
+  --button-padding-side: calc(var(--button-padding-top) * 2);
+}

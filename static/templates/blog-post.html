@@ -1,0 +1,12 @@
+{{define "content"}} {{if .SelectedBlogPost.Title}}
+<p>
+  <a href="/blog">&#11184; <b>Back</b></a>
+</p>
+<hr />
+<br />
+<h2>{{.SelectedBlogPost.Title}}</h2>
+<p><i>{{.SelectedBlogPost.Date}}</i></p>
+<h3>{{.SelectedBlogPost.Subheading}}</h3>
+{{else}}
+<p>Post not found :(</p>
+{{end}} {{end}}
