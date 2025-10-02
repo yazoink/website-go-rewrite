@@ -123,7 +123,7 @@ func main() {
 		tmpl, _ := template.ParseFiles(baseTemplate, templateDir + "blog-post.html")
 		tmpl.Execute(w, data)
 	})
-	http.HandleFunc("/gallery", func (w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/gallery", func (w http.ResponseWriter, r *http.Request) {
 		data.PageTitle = "Art Gallery..."
 		tmpl, _ := template.ParseFiles(baseTemplate, templateDir + "gallery.html")
 		tmpl.Execute(w, data)
