@@ -106,6 +106,7 @@ func main() {
 		data.BlogPostsInSelectedCategory = nil
 	})
 	r.HandleFunc("/blog/post/{post}", func (w http.ResponseWriter, r *http.Request) {
+		data.PageTitle = ""
 		vars := mux.Vars(r)
 		postIndex := -1
 		for i := 0; i < len(data.BlogPosts); i++ {
@@ -121,7 +122,6 @@ func main() {
 		fmt.Println(postIndex)
 		tmpl, _ := template.ParseFiles(baseTemplate, templateDir + "blog-post.html")
 		tmpl.Execute(w, data)
-		data.PageTitle = ""
 	})
 	http.HandleFunc("/gallery", func (w http.ResponseWriter, r *http.Request) {
 		data.PageTitle = "Art Gallery..."
